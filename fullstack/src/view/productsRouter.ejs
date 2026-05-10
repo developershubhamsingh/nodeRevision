@@ -7,12 +7,12 @@
     <title>Storystrap Template</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,22 +25,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">Home</a>
             </div>
             <nav class="collapse navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Category</a>
-                    </li>
-                    <li>
-                        <a href="#">Category</a>
-                    </li>
-                    <li>
-                        <a href="#">Category</a>
-                    </li>
-                    <li>
-                        <a href="#">Category</a>
-                    </li>
+                    <%for(i=0;i<nav.length;i++){%>
+                        <li>
+                            <a href="<%=nav[i].link%>">
+                                <%=nav[i].name%>
+                            </a>
+                        </li>
+                        <%}%>
                 </ul>
                 <ul class="nav navbar-right navbar-nav">
                     <li class="dropdown">
@@ -63,8 +57,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>Storystrap
-                        <p class="lead"></p>
+                    <h1>
+                        <%=title%>
+                            <p class="lead"></p>
                     </h1>
                 </div>
                 <div class="col-md-5">
@@ -106,22 +101,22 @@
                             <div class="row">
                                 <br>
                                 <div class="col-md-2 col-sm-3 text-center">
-                                    <a class="story-title" href="#"><img alt="" src="<%products[i].Image%>"
+                                    <a class="story-title" href="#"><img alt="" src="<%=products[i].Image%>"
                                             style="width:100px;height:100px" class="img-circle"></a>
                                 </div>
                                 <div class="col-md-10 col-sm-9">
                                     <h3>
-                                        <%products[i].product_name%>
+                                        <%=products[i].product_name%>
 
                                     </h3>
                                     <div class="row">
                                         <div class="col-xs-9">
                                             <h4><span class="label label-default">
-                                                    Brand : <%products[i].Brand?products[i].Brand:products[i].company%>
+                                                    Brand : <%=products[i].Brand?products[i].Brand:products[i].company%>
                                                 </span></h4>
                                             <h4>
                                                 <small style="font-family:courier,'new courier';" class="text-muted">
-                                                    Size : <%products[i].Size?Size[i].Brand: "free" %>
+                                                    Size : <%=products[i].Size?products[i].Size: "free" %> <br>
                                                         <a href=" #" class="text-muted">Read More</a></small>
                                             </h4>
                                         </div>
