@@ -1,0 +1,61 @@
+import express from "express";
+import { createClient } from "redis";
+import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
+import { dbConnect, getData } from "./dbConnect.js"
+
+let apps = express();
+let port = 7000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
+
+apps.set("views", "./src/view");
+apps.set("view engine", "ejs");
+
+let client = createClient({
+    socket: {
+        host: "localhost",
+        port: 6379,
+    }
+})
+
+client.on("error", (error) => {
+    console.error("Error Connecting To Client", error)
+})
+
+await client.connect();
+dbConnect();
+
+apps.get("/", async (req, res) => {
+    let cacheData = await client.get("location");
+    if (cacheData) {
+        let result = JSON.parse(cacheData);
+        console.log("redis cache")
+        return res.status(200).send({
+            source: "redis cache",
+            result
+        });
+    }
+    let query = {}
+    let location = await getData("location", query);
+    await client.set("location", (JSON.stringify(location)), ({ Ex: 3600 }));
+    console.log("api response")
+    return res.status(200).send({
+        source: "api response",
+        location
+    })
+})
+process.on("SIGINT", async (req, res) => {
+    await client.quit();
+    process.exit(0);
+})
+
+apps.listen(port, () => {
+    console.log("Server Running on Port", port)
+}).on("error", (error) => {
+    console.error("Error Starting Server", error)
+})
