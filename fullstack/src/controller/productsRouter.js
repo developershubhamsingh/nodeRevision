@@ -7,7 +7,7 @@ const Router = () => {
     productsRouter.get("/", async (req, res) => {
         let query = {};
         let products = await getData("products", query);
-        res.render(products, { title: "Products Page" })
+        res.render("productsRouter", { title: "Products Page", products })
     })
     // productsRouter.get("/details", (req, res) => {
     //     res.send("productsRouter details")

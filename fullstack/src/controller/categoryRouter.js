@@ -7,7 +7,7 @@ const Router = () => {
     categoryRouter.get("/", async (req, res) => {
         let query = {};
         let category = await getData("category", query);
-        res.render(category, { title: "category Page" })
+        res.render("categoryRouter", { title: "category Page", category })
     })
 
     return categoryRouter;
