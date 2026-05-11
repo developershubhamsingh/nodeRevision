@@ -1,0 +1,21 @@
+import { assert } from "console";
+import e from "express";
+import { MongoClient } from "mongodb";
+let mongoUrl = "mongodb://localhost:27017";
+let db;
+
+let DbConnect = async () => {
+    try {
+        let client = new MongoClient(mongoUrl);
+        await client.connect();
+        db = client.db("revision");
+        console.log(" database connected successfully");
+    } catch (error) {
+        console.error(" error connecting database", error)
+    }
+}
+const getData = async(colName, data) => {
+    return await db.collection(colName).insertOne(data);
+}
+
+export { DbConnect, getData }

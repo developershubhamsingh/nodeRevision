@@ -1,0 +1,20 @@
+{
+  "name": "imageuploads",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node apps.js",
+    "dev": "nodemon apps.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
+    "multer": "^2.1.1"
+  }
+}
