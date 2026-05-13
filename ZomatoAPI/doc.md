@@ -19,7 +19,7 @@
 <!-- page 3 (Details Page)-->
 
 # Details of Restaurants wrt ID (GET)
-> http://localhost:7000/details/1
+> http://localhost:7000/restaurants/1
 # Menu wrt Restaurants(GET)
 
 <!-- page 4 -->
