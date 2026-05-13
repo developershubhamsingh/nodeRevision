@@ -62,7 +62,7 @@ apps.get("/location", async (req, res) => {
     res.status(200).send(location);
 })
 // List of all restaurants(GET)
-// # Restaurants wrt city (GET) 
+// Restaurants wrt city (GET) 
 apps.get("/restaurants", async (req, res) => {
     let query = {};
     let restCity = req.query.restCity;
@@ -77,6 +77,17 @@ apps.get("/mealTypes", async (req, res) => {
     let query = {};
     let mealTypes = await getData("mealTypes", query);
     res.status(200).send(mealTypes);
+})
+//============================================//
+// Details of Restaurants wrt ID (GET)
+apps.get("/restaurants/:id", async (req, res) => {
+    let query = {};
+    let rest_details = req.params.id;
+    if (rest_details) {
+        query["restaurant_id"] = Number(rest_details)
+    }
+    let restaurants = await getData("restaurants", query);
+    res.status(200).send(restaurants);
 })
 
 apps.listen(port, () => {
