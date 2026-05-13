@@ -16,7 +16,7 @@ const getData = async (colName, query) => {
     return await db.collection(colName).find(query).toArray()
 }
 const getDataSort = async (colName, query, sort) => {
-    return await db.collection(colName).find(query).sort().toArray()
+    return await db.collection(colName).find(query).sort(sort).toArray()
 }
 
 export { DbConnect, getData,getDataSort }
