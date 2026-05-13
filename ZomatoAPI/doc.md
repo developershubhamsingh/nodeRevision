@@ -16,7 +16,7 @@
 > http://localhost:7000/restaurants?mealsTypes=1&cuisine=1
 > http://localhost:7000/restaurants?mealsTypes=1&cuisine=3
 # List of Restaurants wrt mealTypes + cost (GET)
-> http://localhost:7000/restaurants?lcost=100&hcost=700
+> http://localhost:7000/restaurants?mealsTypes=1&lcost=500&hcost=1000
 # Sort on basis of price (GET)
 > 
 # Pagination(GET)
@@ -37,3 +37,4 @@
 # List of order wrt emails(GET)
 # update the order status(Put)
 # Delete orders(Delete)
+  

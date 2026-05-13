@@ -64,6 +64,7 @@ apps.get("/location", async (req, res) => {
 // Restaurants wrt city (GET) 
 // Restaurants wrt mealTypes (GET)
 // List of Restaurants wrt mealTypes + cuisine(GET) 
+// List of Restaurants wrt mealTypes + cost (GET)
 
 apps.get("/restaurants", async (req, res) => {
     let query = {};
@@ -73,7 +74,7 @@ apps.get("/restaurants", async (req, res) => {
     let lcost = req.query.lcost;
     let hcost = req.query.hcost;
     let sort = { cost: 1 };
-    
+
     if (restCity) {
         query["state_id"] = Number(restCity)
     }
@@ -83,13 +84,26 @@ apps.get("/restaurants", async (req, res) => {
     if (cuisine) {
         query["cuisines.cuisine_id"] = Number(cuisine)
     }
-    if (lcost && hcost) {
-        query["cost"] = {
-            $gte: Number(lcost),
-            $lte: Number(hcost)
+    if (lcost || hcost) {
+
+        query["cost"] = {};
+
+        if (lcost) {
+            query["cost"]["$gte"] = Number(lcost);
+        }
+
+        if (hcost) {
+            query["cost"]["$lte"] = Number(hcost);
         }
     }
-    let restaurants = await getDataSort("restaurants", query,sort);
+    //if only want this condition then we can use this code
+    // if (lcost && hcost) {
+    //     query["cost"] = {
+    //         $gte: Number(lcost),
+    //         $lte: Number(hcost)
+    //     }
+    // }
+    let restaurants = await getDataSort("restaurants", query, sort);
     res.status(200).send(restaurants);
 })
 //# List of all meal (GET)
