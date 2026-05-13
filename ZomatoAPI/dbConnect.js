@@ -18,5 +18,8 @@ const getData = async (colName, query) => {
 const getDataSort = async (colName, query, sort) => {
     return await db.collection(colName).find(query).sort(sort).toArray()
 }
+const getDataSortLimit = async (colName, query, sort, skip, limit) => {
+    return await db.collection(colName).find(query).sort(sort).skip(skip).limit(limit).toArray()
+}
 
-export { DbConnect, getData,getDataSort }
+export { DbConnect, getData, getDataSort, getDataSortLimit }

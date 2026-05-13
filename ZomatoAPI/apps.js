@@ -4,7 +4,7 @@ dotenv.config();
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
-import { DbConnect, getData, getDataSort } from "./dbConnect.js";
+import { DbConnect, getData, getDataSort, getDataSortLimit } from "./dbConnect.js";
 import cors from "cors";
 let apps = express()
 let port = 7000;
@@ -65,6 +65,7 @@ apps.get("/location", async (req, res) => {
 // Restaurants wrt mealTypes (GET)
 // List of Restaurants wrt mealTypes + cuisine(GET) 
 // List of Restaurants wrt mealTypes + cost (GET)
+// Sort on basis of price (GET)
 
 apps.get("/restaurants", async (req, res) => {
     let query = {};
@@ -73,8 +74,15 @@ apps.get("/restaurants", async (req, res) => {
     let cuisine = req.query.cuisine;
     let lcost = req.query.lcost;
     let hcost = req.query.hcost;
-    let sort = { cost: 1 };
+    //default sorting by cost low to high no need to write any conditions 👇
+    // let sort = { cost: 1 };
+    //dynamic sorting👇 
+    let sortKey = req.query.sortKey;
+    let sortOrder = req.query.sortOrder;
+    let skip = Number(req.query.skip )|| 0;
+    let limit = Number(req.query.limit) || 1000000000;
 
+    
     if (restCity) {
         query["state_id"] = Number(restCity)
     }
@@ -103,7 +111,13 @@ apps.get("/restaurants", async (req, res) => {
     //         $lte: Number(hcost)
     //     }
     // }
-    let restaurants = await getDataSort("restaurants", query, sort);
+
+    //dynamic sorting👇
+    let sort = {};
+    if (sortKey && sortOrder) {
+        sort[sortKey] = Number(sortOrder);
+    }
+    let restaurants = await getDataSortLimit("restaurants", query, sort, skip, limit);
     res.status(200).send(restaurants);
 })
 //# List of all meal (GET)
