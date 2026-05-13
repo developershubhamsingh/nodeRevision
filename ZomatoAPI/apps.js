@@ -4,9 +4,8 @@ dotenv.config();
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
-import { DbConnect, getData } from "./dbConnect.js";
+import { DbConnect, getData, getDataSort } from "./dbConnect.js";
 import cors from "cors";
-import { buffer } from "stream/consumers";
 let apps = express()
 let port = 7000;
 let key = process.env.KEY;
@@ -63,13 +62,34 @@ apps.get("/location", async (req, res) => {
 })
 // List of all restaurants(GET)
 // Restaurants wrt city (GET) 
+// Restaurants wrt mealTypes (GET)
+// List of Restaurants wrt mealTypes + cuisine(GET) 
+
 apps.get("/restaurants", async (req, res) => {
     let query = {};
     let restCity = req.query.restCity;
+    let mealsTypes = req.query.mealsTypes;
+    let cuisine = req.query.cuisine;
+    let lcost = req.query.lcost;
+    let hcost = req.query.hcost;
+    let sort = { cost: 1 };
+    
     if (restCity) {
         query["state_id"] = Number(restCity)
     }
-    let restaurants = await getData("restaurants", query);
+    if (mealsTypes) {
+        query["mealTypes.mealtype_id"] = Number(mealsTypes)
+    }
+    if (cuisine) {
+        query["cuisines.cuisine_id"] = Number(cuisine)
+    }
+    if (lcost && hcost) {
+        query["cost"] = {
+            $gte: Number(lcost),
+            $lte: Number(hcost)
+        }
+    }
+    let restaurants = await getDataSort("restaurants", query,sort);
     res.status(200).send(restaurants);
 })
 //# List of all meal (GET)
@@ -89,6 +109,8 @@ apps.get("/restaurants/:id", async (req, res) => {
     let restaurants = await getData("restaurants", query);
     res.status(200).send(restaurants);
 })
+//============================================//
+
 
 apps.listen(port, () => {
     DbConnect();

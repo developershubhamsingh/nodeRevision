@@ -11,9 +11,14 @@
 <!-- page 2 (Listing Page)-->
 
 # Restaurants wrt mealTypes (GET)
+> http://localhost:7000/restaurants?mealsTypes=3
 # List of Restaurants wrt mealTypes + cuisine(GET) 
+> http://localhost:7000/restaurants?mealsTypes=1&cuisine=1
+> http://localhost:7000/restaurants?mealsTypes=1&cuisine=3
 # List of Restaurants wrt mealTypes + cost (GET)
+> http://localhost:7000/restaurants?lcost=100&hcost=700
 # Sort on basis of price (GET)
+> 
 # Pagination(GET)
 
 <!-- page 3 (Details Page)-->
