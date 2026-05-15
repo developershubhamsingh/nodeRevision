@@ -120,7 +120,7 @@ apps.get("/restaurants", async (req, res) => {
     let restaurants = await getDataSortLimit("restaurants", query, sort, skip, limit);
     res.status(200).send(restaurants);
 })
-//# List of all meal (GET)
+// List of all meal (GET)
 apps.get("/mealTypes", async (req, res) => {
     let query = {};
     let mealTypes = await getData("mealTypes", query);

@@ -7,9 +7,9 @@ let DbConnect = async () => {
         let client = new MongoClient(mongoUrl);
         await client.connect();
         db = client.db("Restaurents");
-        console.log(" database connected successfully");
+        console.log("database connected successfully");
     } catch (error) {
-        console.error(" error connecting database", error)
+        console.error("error connecting database", error)
     }
 }
 const getData = async (colName, query) => {
