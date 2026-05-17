@@ -21,7 +21,7 @@
 > http://localhost:7000/restaurants?sortKey=cost&sortOrder=1
 > http://localhost:7000/restaurants?mealsTypes=1&cuisine=1&lcost=500&hcost=1000&sortKey=cost&sortOrder=1
 # Pagination(GET)
-> http://localhost:7000/restaurants?&sortKey=cost&sortOrder=1&skip=3&limit=3
+> http://localhost:7000/restaurants?&sortKey=cost&sortKey=cost&sortOrder=1&skip=3&limit=3
 <!-- page 3 (Details Page)-->
 
 # Details of Restaurants wrt ID (GET)

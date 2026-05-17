@@ -98,15 +98,21 @@ apps.get("/restaurants", async (req, res) => {
         // dynamic sorting👇
         // http://localhost:7000/restaurants?sortKey=cost&sortOrder=1
         // http://localhost:7000/restaurants?sortKey=cost
+
         let sortKey = req.query.sortKey
         let sortOrder = req.query.sortOrder || 1;
         let sort = {}
         if (sortKey && sortOrder) {
             sort[sortKey] = Number(sortOrder);
         }
+        // Pagination(GET)
+        // http://localhost:7000/restaurants?sortKey=cost&skip=0&limit=3
+        let skip = Number(req.query.skip) || 0;
+        let limit = Number(req.query.limit) || 100000;
 
 
-        let restaurants = await getDataSort("restaurants", query, sort);
+
+        let restaurants = await getDataSortLimit("restaurants", query, sort, skip, limit);
         res.status(200).send(restaurants);
     } catch (error) {
         res.status(401).send("cannot get data", error);
